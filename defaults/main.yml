@@ -1,0 +1,16 @@
+---
+# defaults file for aspects_yum_cron
+aspects_yum_cron_config:
+#  YUM_PARAMETER:
+  CHECK_ONLY: no
+  CHECK_FIRST: no
+  DOWNLOAD_ONLY: no
+  ERROR_LEVEL: 0
+  DEBUG_LEVEL: 1
+  RANDOMWAIT: "60"
+#  MAILTO:
+#  SYSTEMNAME: ""
+  DAYS_OF_WEEK: "0123456"
+  CLEANDAY: "0"
+  SERVICE_WAITS: yes
+  SERVICE_WAIT_TIME: 300

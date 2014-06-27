@@ -1,0 +1,14 @@
+---
+# handlers file for aspects_yum_cron
+
+- name: restart yum-cron
+  service: name=yum-cron state=restarted enabled=yes
+
+- name: reload yum-cron
+  service: name=yum-cron state=reloaded enabled=yes
+
+- name: start yum-cron
+  service: name=yum-cron state=started enabled=yes
+
+- name: stop yum-cron
+  service: name=yum-cron state=stopped
