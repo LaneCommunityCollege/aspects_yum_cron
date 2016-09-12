@@ -3,12 +3,20 @@
 
 - name: restart yum-cron
   service: name=yum-cron state=restarted enabled=yes
+  tags:
+    - aspects_yum_cron
 
 - name: reload yum-cron
   service: name=yum-cron state=reloaded enabled=yes
+  tags:
+    - aspects_yum_cron
 
 - name: start yum-cron
   service: name=yum-cron state=started enabled=yes
+  tags:
+    - aspects_yum_cron
 
 - name: stop yum-cron
   service: name=yum-cron state=stopped
+  tags:
+    - aspects_yum_cron
