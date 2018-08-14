@@ -1,15 +1,8 @@
 ---
-# tasks file for aspects_yum_cron
-- name: RedHat - Set default packages state with yum
-  when: ansible_os_family == "RedHat"
-  yum:
-    pkg: "yum-cron"
-    state: "present"
-  tags:
-    - aspects_yum_cron
-
 - name: set yum-cron config template
-  when: ansible_os_family == "RedHat"
+  when:
+  - aspects_yum_cron_enabled
+  - ansible_os_family == "RedHat"
   template:
     src: "etc-sysconfig-yum-cron.j2"
     dest: "/etc/sysconfig/yum-cron"

@@ -1,5 +1,13 @@
 ---
-# defaults file for aspects_yum_cron
+aspects_yum_cron_enabled: False
+aspects_packages_packages:
+  yum-cron:
+    state: "present"
+    CentOS:
+      7: "yum-cron"
+    OracleLinux:
+      6: "yum-cron"
+      7: "yum-cron"
 aspects_yum_cron_config:
 #  YUM_PARAMETER:
   CHECK_ONLY: no
