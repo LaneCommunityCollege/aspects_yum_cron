@@ -1,6 +1,6 @@
 # aspects_yum_cron
 
-Install and configure yum-cron to run updates on RedHat family OS's.
+Install and configure yum-cron to run updates on CentOS 7.
 
 # Requirements
 Set ```hash_behaviour=merge``` in your ansible.cfg file.
