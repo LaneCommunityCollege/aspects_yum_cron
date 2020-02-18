@@ -1,13 +1,8 @@
 ---
-- name: set yum-cron config template
+- name: "Include aspects_yum_cron role tasks when enabled."
   when:
-  - aspects_yum_cron_enabled
-  - ansible_distribution == "CentOS"
-  - ansible_distribution_major_version == "7"
-  template:
-    src: "etc-sysconfig-yum-cron.j2"
-    dest: "/etc/sysconfig/yum-cron"
-  notify:
-    - restart yum-cron
+    - ansible_pkg_mgr == "yum"
+    - aspects_yum_cron_enabled
+  include_tasks: "init.yml"
   tags:
     - aspects_yum_cron

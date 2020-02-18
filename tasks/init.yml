@@ -1,0 +1,138 @@
+---
+- name: set default yum-cron config template
+  when:
+    - aspects_yum_cron_config_default.enabled == True or aspects_yum_cron_config_default.enabled == "True"
+  template:
+    src: "etc-yum-yum-cron.conf.j2"
+    dest: "/etc/yum/yum-cron.conf"
+    mode: "0644"
+  notify:
+    - restart yum-cron
+  tags:
+    - aspects_yum_cron
+
+- name: set security yum-cron config template
+  when:
+    - aspects_yum_cron_config_security.enabled == True or aspects_yum_cron_config_security.enabled == "True"
+  template:
+    src: "etc-yum-yum-cron-security.conf.j2"
+    dest: "/etc/yum/yum-cron-security.conf"
+    mode: "0644"
+  notify:
+    - restart yum-cron
+  tags:
+    - aspects_yum_cron
+
+- name: set hourly yum-cron config template
+  when:
+    - aspects_yum_cron_config_hourly.enabled == True or aspects_yum_cron_config_hourly.enabled == "True"
+  template:
+    src: "etc-yum-yum-cron-hourly.conf.j2"
+    dest: "/etc/yum/yum-cron-hourly.conf"
+    mode: "0644"
+  notify:
+    - restart yum-cron
+  tags:
+    - aspects_yum_cron
+
+- name: set /etc/cron.daily/0yum-daily.cron
+  when:
+    - aspects_yum_cron_config_security.enabled == True or aspects_yum_cron_config_security.enabled == "True"
+  copy:
+    src: "etc-cron.daily-0yum-daily.cron"
+    dest: "/etc/cron.daily/0yum-daily.cron"
+    mode: "0755"
+  notify:
+    - restart yum-cron
+  tags:
+    - aspects_yum_cron
+
+- name: set /etc/cron.daily/1yum-default.cron
+  when:
+    - aspects_yum_cron_config_default.enabled == True or aspects_yum_cron_config_default.enabled == "True"
+  copy:
+    src: "etc-cron.daily-1yum-default.cron"
+    dest: "/etc/cron.daily/1yum-default.cron"
+    mode: "0755"
+  notify:
+    - restart yum-cron
+  tags:
+    - aspects_yum_cron
+
+- name: set /etc/cron.hourly/0yum-hourly.cron
+  when:
+    - aspects_yum_cron_config_hourly.enabled == True or aspects_yum_cron_config_hourly.enabled == "True"
+  copy:
+    src: "etc-cron.hourly-0yum-hourly.cron"
+    dest: "/etc/cron.hourly/0yum-hourly.cron"
+    mode: "0755"
+  notify:
+    - restart yum-cron
+  tags:
+    - aspects_yum_cron
+
+- name: remove default yum-cron config file when it is disabled
+  when:
+    - aspects_yum_cron_config_default.enabled == False or aspects_yum_cron_config_default.enabled == "False"
+  file:
+    state: "absent"
+    path: "/etc/yum/yum-cron.conf"
+  notify:
+    - restart yum-cron
+  tags:
+    - aspects_yum_cron
+
+- name: remove hourly yum-cron config file when it is disabled
+  when:
+    - aspects_yum_cron_config_hourly.enabled == False or aspects_yum_cron_config_hourly.enabled == "False"
+  file:
+    state: "absent"
+    path: "/etc/yum/yum-cron-hourly.conf"
+  notify:
+    - restart yum-cron
+  tags:
+    - aspects_yum_cron
+
+- name: remove security yum-cron config file when it is disabled
+  when:
+    - aspects_yum_cron_config_security.enabled == False or aspects_yum_cron_config_security.enabled == "False"
+  file:
+    state: "absent"
+    path: "/etc/yum/yum-cron-security.conf"
+  notify:
+    - restart yum-cron
+  tags:
+    - aspects_yum_cron
+
+- name: remove /etc/cron.daily/0yum-daily.cron when security config is disabled
+  when:
+    - aspects_yum_cron_config_security.enabled == False or aspects_yum_cron_config_security.enabled == "False"
+  file:
+    state: "absent"
+    path: "/etc/cron.daily/0yum-daily.cron"
+  notify:
+    - restart yum-cron
+  tags:
+    - aspects_yum_cron
+
+- name: remove /etc/cron.daily/1yum-default.cron when default config is disabled
+  when:
+    - aspects_yum_cron_config_default.enabled == False or aspects_yum_cron_config_default.enabled == "False"
+  file:
+    state: "absent"
+    path: "/etc/cron.daily/1yum-default.cron"
+  notify:
+    - restart yum-cron
+  tags:
+    - aspects_yum_cron
+
+- name: remove /etc/cron.hourly/0yum-hourly.cron when hourly config is disabled
+  when:
+    - aspects_yum_cron_config_hourly.enabled == False or aspects_yum_cron_config_hourly.enabled == "False"
+  file:
+    state: "absent"
+    path: "/etc/cron.hourly/0yum-hourly.cron"
+  notify:
+    - restart yum-cron
+  tags:
+    - aspects_yum_cron

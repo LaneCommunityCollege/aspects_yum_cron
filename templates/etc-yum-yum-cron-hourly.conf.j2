@@ -1,0 +1,136 @@
+# {{ ansible_managed }}
+[commands]
+#  What kind of update to use:
+# default                            = yum upgrade
+# security                           = yum --security upgrade
+# security-severity:Critical         = yum --sec-severity=Critical upgrade
+# minimal                            = yum --bugfix update-minimal
+# minimal-security                   = yum --security update-minimal
+# minimal-security-severity:Critical =  --sec-severity=Critical update-minimal
+{% if aspects_yum_cron_config_hourly.config.update_cmd is defined
+  and aspects_yum_cron_config_hourly.config.update_cmd != "" %}
+update_cmd = {{ aspects_yum_cron_config_hourly.config.update_cmd }}
+{% endif %}
+
+# Whether a message should be emitted when updates are available,
+# were downloaded, or applied.
+{% if aspects_yum_cron_config_hourly.config.update_messages is defined
+  and aspects_yum_cron_config_hourly.config.update_messages != "" %}
+update_messages = {{ aspects_yum_cron_config_hourly.config.update_messages }}
+{% endif %}
+
+# Whether updates should be downloaded when they are available.
+{% if aspects_yum_cron_config_hourly.config.download_updates is defined
+  and aspects_yum_cron_config_hourly.config.download_updates != "" %}
+download_updates = {{ aspects_yum_cron_config_hourly.config.download_updates }}
+{% endif %}
+
+# Whether updates should be applied when they are available.  Note
+# that download_updates must also be yes for the update to be applied.
+{% if aspects_yum_cron_config_hourly.config.apply_updates is defined
+  and aspects_yum_cron_config_hourly.config.apply_updates != "" %}
+apply_updates = {{ aspects_yum_cron_config_hourly.config.apply_updates }}
+{% endif %}
+
+# Maximum amout of time to randomly sleep, in minutes.  The program
+# will sleep for a random amount of time between 0 and random_sleep
+# minutes before running.  This is useful for e.g. staggering the
+# times that multiple systems will access update servers.  If
+# random_sleep is 0 or negative, the program will run immediately.
+# 6*60 = 360
+{% if aspects_yum_cron_config_hourly.config.random_sleep is defined
+  and aspects_yum_cron_config_hourly.config.random_sleep != "" %}
+random_sleep = {{ aspects_yum_cron_config_hourly.config.random_sleep }}
+{% endif %}
+
+
+[emitters]
+# Name to use for this system in messages that are emitted.  If
+# system_name is None, the hostname will be used.
+{% if aspects_yum_cron_config_hourly.config.system_name is defined
+  and aspects_yum_cron_config_hourly.config.system_name != "" %}
+system_name = {{ aspects_yum_cron_config_hourly.config.system_name }}
+{% endif %}
+
+# How to send messages.  Valid options are stdio and email.  If
+# emit_via includes stdio, messages will be sent to stdout; this is useful
+# to have cron send the messages.  If emit_via includes email, this
+# program will send email itself according to the configured options.
+# If emit_via is None or left blank, no messages will be sent.
+{% if aspects_yum_cron_config_hourly.config.emit_via is defined
+  and aspects_yum_cron_config_hourly.config.emit_via != "" %}
+emit_via = {{ aspects_yum_cron_config_hourly.config.emit_via }}
+{% endif %}
+
+# The width, in characters, that messages that are emitted should be
+# formatted to.
+{% if aspects_yum_cron_config_hourly.config.output_width is defined
+  and aspects_yum_cron_config_hourly.config.output_width != "" %}
+output_width = {{ aspects_yum_cron_config_hourly.config.output_width }}
+{% endif %}
+
+
+[email]
+# The address to send email messages from.
+# NOTE: 'localhost' will be replaced with the value of system_name.
+{% if aspects_yum_cron_config_hourly.config.email_from is defined
+  and aspects_yum_cron_config_hourly.config.email_from != "" %}
+email_from = {{ aspects_yum_cron_config_hourly.config.email_from }}
+{% endif %}
+
+# List of addresses to send messages to.
+{% if aspects_yum_cron_config_hourly.config.email_to is defined
+  and aspects_yum_cron_config_hourly.config.email_to != "" %}
+email_to = {{ aspects_yum_cron_config_hourly.config.email_to }}
+{% endif %}
+
+# Name of the host to connect to to send email messages.
+{% if aspects_yum_cron_config_hourly.config.email_host is defined
+  and aspects_yum_cron_config_hourly.config.email_host != "" %}
+email_host = {{ aspects_yum_cron_config_hourly.config.email_host }}
+{% endif %}
+
+
+[groups]
+# NOTE: This only works when group_command != objects, which is now the default
+# List of groups to update
+{% if aspects_yum_cron_config_hourly.config.group_list is defined
+  and aspects_yum_cron_config_hourly.config.group_list != "" %}
+group_list = {{ aspects_yum_cron_config_hourly.config.group_list }}
+{% endif %}
+
+# The types of group packages to install
+{% if aspects_yum_cron_config_hourly.config.group_package_types is defined
+  and aspects_yum_cron_config_hourly.config.group_package_types != "" %}
+group_package_types = {{ aspects_yum_cron_config_hourly.config.group_package_types }}
+{% endif %}
+
+[base]
+# This section overrides yum.conf
+
+# Use this to filter Yum core messages
+# -4: critical
+# -3: critical+errors
+# -2: critical+errors+warnings (default)
+{% if aspects_yum_cron_config_hourly.config.debuglevel is defined
+  and aspects_yum_cron_config_hourly.config.debuglevel != "" %}
+debuglevel = {{ aspects_yum_cron_config_hourly.config.debuglevel }}
+{% endif %}
+
+# skip_broken = True
+{% if aspects_yum_cron_config_hourly.config.skip_broken is defined
+  and aspects_yum_cron_config_hourly.config.skip_broken != "" %}
+skip_broken = {{ aspects_yum_cron_config_hourly.config.skip_broken }}
+{% endif %}
+
+{% if aspects_yum_cron_config_hourly.config.mdpolicy is defined
+  and aspects_yum_cron_config_hourly.config.mdpolicy != "" %}
+mdpolicy = {{ aspects_yum_cron_config_hourly.config.mdpolicy }}
+{% endif %}
+
+# Uncomment to auto-import new gpg keys (dangerous)
+# assumeyes = True
+{% if aspects_yum_cron_config_hourly.config.assumeyes is defined
+  and aspects_yum_cron_config_hourly.config.assumeyes != "" %}
+assumeyes = {{ aspects_yum_cron_config_hourly.config.assumeyes }}
+{% endif %}

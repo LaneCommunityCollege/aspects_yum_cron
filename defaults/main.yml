@@ -5,17 +5,49 @@ aspects_packages_packages:
     state: "present"
     CentOS:
       7: "yum-cron"
-aspects_yum_cron_config:
-#  YUM_PARAMETER:
-  CHECK_ONLY: no
-  CHECK_FIRST: no
-  DOWNLOAD_ONLY: no
-  ERROR_LEVEL: 0
-  DEBUG_LEVEL: 1
-  RANDOMWAIT: "60"
-#  MAILTO:
-#  SYSTEMNAME: ""
-  DAYS_OF_WEEK: "0123456"
-  CLEANDAY: "0"
-  SERVICE_WAITS: yes
-  SERVICE_WAIT_TIME: 300
+aspects_yum_cron_config_default:
+  enabled: True
+  config:
+    update_cmd: "default"
+    update_messages: "yes"
+    download_updates: "yes"
+    apply_updates: "no"
+    random_sleep: "360"
+    system_name: "None"
+    emit_via: "stdio"
+    output_width: "80"
+    email_from: "root@localhost"
+    email_to: "root"
+    email_host: "localhost"
+    group_list: "None"
+    group_package_types: "mandatory, default"
+    debuglevel: "-2"
+    mdpolicy: "group:main"
+aspects_yum_cron_config_hourly:
+  enabled: False
+  config:
+    update_cmd: "default"
+    update_messages: "no"
+    download_updates: "no"
+    apply_updates: "no"
+    random_sleep: "15"
+    system_name: "None"
+    emit_via: "stdio"
+aspects_yum_cron_config_security:
+  enabled: False
+  config:
+    update_cmd: "security"
+    update_messages: "yes"
+    download_updates: "yes"
+    apply_updates: "yes"
+    random_sleep: "1"
+    system_name: "{{ ansible_fqdn }}"
+    emit_via: "email"
+    output_width: "80"
+    email_from: "root@{{ ansible_fqdn }}"
+    email_to: "root@localhost"
+    email_host: "localhost"
+    group_list: "None"
+    group_package_types: "mandatory, default"
+    debuglevel: "-2"
+    mdpolicy: 'group:main'
