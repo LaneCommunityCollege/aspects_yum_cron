@@ -5,6 +5,8 @@ aspects_packages_packages:
     state: "present"
     CentOS:
       7: "yum-cron"
+    OracleLinux:
+      7: "yum-cron"
 aspects_yum_cron_config_default:
   enabled: True
   config:
